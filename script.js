@@ -25,14 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- PLAYER ELEMENTS ---
-    const audio = document.getElementById('audio-element');
+    const audio = document.getElementById('audio-element'); // This is your HTML5 Audio Element
     const playPauseBtn = document.getElementById('play-pause-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const skipForwardBtn = document.getElementById('skip-forward-btn');
     const skipBackwardBtn = document.getElementById('skip-backward-btn');
     const progressBar = document.getElementById('progress-bar');
-    const volumeSlider = document.getElementById('volume-slider');
+    const volumeSlider = document.getElementById('volume-slider'); // Controls audio.volume (0-1)
     const currentTimeDisplay = document.getElementById('current-time');
     const totalDurationDisplay = document.getElementById('total-duration');
     const trackTitleDisplay = document.getElementById('track-title');
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const presetButtons = document.querySelectorAll('.eq-preset-btn');
     let audioContext;
     let audioElementSource;
-    let gainNode;
+    let masterGainNode; // Renamed for clarity, this will provide the boost
     let eqFilters = [];
     const eqFrequencies = [60, 230, 910, 3600, 14000];
     const defaultEQSettings = { gains: [5.5, -15, -15, 0, 15], presetName: "custom1" };
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     let activePreset = defaultEQSettings.presetName;
 
-    // --- MASTER TRACKS DATA (Corrected SRC paths based on DIR output) ---
+    // --- MASTER TRACKS DATA (Make sure SRC paths are correct based on your GitHub files) ---
     const masterTracks = [
         // --- PWRDCNV (from audios/sec noon/) ---
         {
@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "This is the continuation of the previous audio. They decided to keep Inchaara as the TL and chose Akshya for the next project. Later, they started talking about me and Anson, saying that we don’t ask any doubts or questions. You can hear the rest in the remaining audio."
         },
         {
-            title: "Sanjay being called kalla which he absolutely denied and abt mee too", // Title kept as user had it
+            title: "Sanjay being called kalla which he absolutely denied and abt mee too", 
             artist: "27:08 - 28:10",
-            src: "./audios/sec noon/Sanjay being called kalla which he absolutely denaied and abt mee too 1st is abt Sanjay second is abt me.mp3", // Path uses the actual long filename from dir
+            src: "./audios/sec noon/Sanjay being called kalla which he absolutely denaied and abt mee too 1st is abt Sanjay second is abt me.mp3", 
             category: "PWRDCNV",
             description: "In this audio, Sujay suddenly points at Sanjay’s place, calling him kalla (thief). I don’t know why he said that, so I asked Sujay to confirm in the monday morning u guys heard, but he denied saying anything like that to Sanjay.Later, Thika says to Sujay that Sanjay doesn’t sit at his system or do QC he just roams here and there and talks with the LiDAR members without actually working.Sujay then asks Sanjay, “avanigu idhaku en sammandha?” (What does this have to do with thim?)Later, thika says that Sanjay is not at his system, while me (shashank) is at his system but doesn’t work—he just looks at his mobile."
         },
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             title: "full audio original of the thika convo without denoising",
             artist: "PWRDCNV Original",
-            src: "./audios/sec noon/full audio original of the thika convo.m4a", // Corrected extension to .m4a
+            src: "./audios/sec noon/full audio original of the thika convo.m4a", 
             category: "PWRDCNV",
             description: "This is the full 1 hour 16 minute audio from the power cut day, where Sujay, Savitha, and Thika were having a discussion. which is not denoised it contains more noise than think"
         },
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             title: "sujay denying again none of it doesn't matter",
             artist: "MCNV Morning",
-            src: "./audios/morning/sujay denying again none of it diesnt matter.mp3", // Filename contains "diesnt"
+            src: "./audios/morning/sujay denying again none of it diesnt matter.mp3", 
             category: "MCNV",
             description: "Here too, he is denying that he said anything personal about others.."
         },
@@ -217,14 +217,14 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             title: "this is when thika came and said those about deliberately said it",
             artist: "MCNV Morning",
-            src: "./audios/morning/this is when thika came and sad those.mp3", // Filename contains "sad"
+            src: "./audios/morning/this is when thika came and sad those.mp3", 
             category: "MCNV",
             description: "This is where Thika entered the conversation. Sujay said that without her or Savitha, he wouldn’t discuss anything at all. He then asked if he had said anything like that about himself, and Thika denied that he did. But I had already heard these things before Thika even arrived.Thika responded by saying, 'That’s your personal matter. we dont want that' But here’s the key part—she asked, 'How does he know everything we talk about inside the cabin?' That clearly shows they were talking behind our backs. She even deliberately said, 'Naav nimge kelbek anthane maathadudhu', meaning 'I was talking as if we should hear it.'Then Thika said, 'Idhalla bekitha? sujay'(Was all this really necessary?), and Sujay avoided talking further about it—likely because he knows he actually said those things to each one of us.Later, Thika asked, 'Nivu offer letter kottidhira?' (Did you give an offer letter?), to which Sujay replied, 'Illa.'' Thika then said, 'Then how can you give an experience letter?'"
         },
         {
             title: "contains termination again denying and salary on Sunday bonus and experience letter in after",
             artist: "MCNV Morning",
-            src: "./audios/morning/contains termination again denyment and sala on sunday bonus and exper in after.mp3", // Filename contains "denyment", "sala", "exper"
+            src: "./audios/morning/contains termination again denyment and sala on sunday bonus and exper in after.mp3", 
             category: "MCNV",
             description: "n this part, Sujay says that pay is not calculated based on the time you spend in the office, but only on your performance, which is more profitable for them.Then comes the experience letter topic again—some vague, back-and-forth comments, just more of the same “blah blah blah.” Regarding salaries: that Thika is getting ₹45K, Prakash sir ₹35K, and Nagaraj sir ₹26K. They even talked about giving incentives to Nagaraj sir, but it’s unclear how true that is.Later in the audio, Sujay again denies calling Sanjay a 'kalla' (thief), even though it was clearly heard in a previous recording. Any time they hit a dead end in a conversation with me—especially when they risk exposing themselves—they quickly switch topics to avoid getting caught saying something they shouldn’t.Then Thika suddenly starts saying to Sujay, “Idhella namge bekka, termination maadi ashte”, and honestly, I don’t know wtf she was thinking.Once again, the experience letter issue comes up. And regarding Sunday work, they don’t pay overtime—it’s the same pay as a normal day, which really doesn’t justify the value of our time. Whether or not they will even give bonuses to us is also uncertain."
         },
@@ -238,14 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             title: "convo bwt savitha sujay call about sal to chirasri and insha",
             artist: "MCNV Morning",
-            src: "./audios/morning/convo bwt savitha sujat call about sal to chirasri and insha.mp3", // Filename contains "sujat"
+            src: "./audios/morning/convo bwt savitha sujat call about sal to chirasri and insha.mp3", 
             category: "MCNV",
             description: "In this part, Sujay called Savitha to ask whether the full salary was paid to Chirasri and Insha. The truth is—they weren’t paid in full. Sujay claimed he gave them the full salary, but he didn't.When he called Savitha, she said they only paid ₹9,000 each, and ₹3,000 was withheld because Chirasri and Insha left the company without informing anyone.At one point in end of january , Sujay also called me and said, “If they’re not interested in working here, they can leave the company.” I told them exactly that. Additionally, Sujay said, “Avaru illi timepass ge kelsakke barudhu, aadhre avarannu naan timepass maadisthini.” I'm not entirely sure what he meant by that, but that’s what he told me directly inside the cabin—with Sanjay also present.Then, for the second time, after realizing that the full salary hadn't actually been paid, Sujay quickly tried to change the topic again—just like before—likely to avoid taking accountability."
         },
         {
             title: "mini convo bwt ans me Sujay",
             artist: "MCNV Morning",
-            src: "./audios/morning/mini convo bwt ans me sujay.mp3", // Filename "sujay" lowercase
+            src: "./audios/morning/mini convo bwt ans me sujay.mp3", 
             category: "MCNV",
             description: "Mini conversation, Sujay answers."
         },
@@ -257,9 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "and this is the audio of monday that everything happened in office"
         },
         {
-            title: "05-26-2025 10.43 am Recording", // Title kept as user had it
+            title: "05-26-2025 10.43 am Recording", 
             artist: "MCNV Morning",
-            src: "./audios/morning/05-26-2025 10.43 am.m4a", // Corrected src to point to the actual .m4a file from dir
+            src: "./audios/morning/05-26-2025 10.43 am.m4a", 
             category: "MCNV",
             description: "Morning recording between me and sujay"
         },
@@ -309,11 +309,158 @@ document.addEventListener('DOMContentLoaded', () => {
     function getFormatFromSrc(src) { if (typeof src !== 'string' || src === '') return ''; const extension = src.substring(src.lastIndexOf('.') + 1).toLowerCase(); switch (extension) { case 'm4a': return 'M4A'; case 'mp3': return 'MP3'; case 'wav': return 'WAV'; case 'ogg': return 'OGG'; default: return extension.toUpperCase(); } }
     function displayTrackError(message) { trackErrorDisplay.textContent = message; trackErrorDisplay.style.display = 'block'; trackFormatDisplay.textContent = ''; trackFormatSeparator.style.display = 'none'; if (externalTrackDescriptionContent) externalTrackDescriptionContent.textContent = ''; if (externalTrackDescriptionArea) externalTrackDescriptionArea.style.display = 'none'; }
     function clearTrackError() { trackErrorDisplay.style.display = 'none'; trackErrorDisplay.textContent = ''; }
-    function initAudioProcessing() { if (isAudioContextInitialized) return; try { audioContext = new (window.AudioContext || window.webkitAudioContext)(); audioElementSource = audioContext.createMediaElementSource(audio); gainNode = audioContext.createGain(); eqFilters = eqFrequencies.map((freq, i) => { const filter = audioContext.createBiquadFilter(); filter.type = 'peaking'; filter.frequency.value = freq; filter.Q.value = 1.2; filter.gain.value = eqSliders[i] ? parseFloat(eqSliders[i].value) : defaultEQSettings.gains[i]; return filter; }); if (eqFilters.length > 0) eqFilters[0].type = 'lowshelf'; let currentNode = audioElementSource; eqFilters.forEach(filter => { currentNode.connect(filter); currentNode = filter; }); currentNode.connect(gainNode); gainNode.connect(audioContext.destination); isAudioContextInitialized = true; console.log("AudioContext and EQ initialized."); eqSliders.forEach(slider => slider.disabled = false); if(resetEqBtn) resetEqBtn.disabled = false; presetButtons.forEach(btn => btn.disabled = false); } catch (e) { console.error("Error initializing Web Audio API:", e); displayTrackError("Audio effects (EQ) not available."); eqSliders.forEach(slider => slider.disabled = true); if(resetEqBtn) resetEqBtn.disabled = true; presetButtons.forEach(btn => btn.disabled = true); } }
+    
+    // MODIFIED initAudioProcessing with Fixed Master Boost
+    function initAudioProcessing() {
+        if (isAudioContextInitialized) return;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            audioElementSource = audioContext.createMediaElementSource(audio); // Source is the HTML5 <audio> element
+            
+            masterGainNode = audioContext.createGain(); // Create the master gain node
+            
+            // Apply a fixed boost. Adjust this value as needed.
+            // 1.0 = no boost
+            // 1.5 = 50% louder (approx +3.5dB)
+            // 2.0 = 100% louder (approx +6dB) - START HERE OR LOWER AND TEST CAREFULLY
+            const fixedBoostValue = 1.5; // EXAMPLE: Set your desired fixed boost
+            masterGainNode.gain.value = fixedBoostValue;
+
+            eqFilters = eqFrequencies.map((freq, i) => {
+                const filter = audioContext.createBiquadFilter();
+                filter.type = 'peaking';
+                filter.frequency.value = freq;
+                filter.Q.value = 1.2;
+                filter.gain.value = eqSliders[i] ? parseFloat(eqSliders[i].value) : defaultEQSettings.gains[i];
+                return filter;
+            });
+            if (eqFilters.length > 0) eqFilters[0].type = 'lowshelf'; 
+
+            // Connect nodes: HTML5 Audio Element -> EQ Filters -> Master Gain Node -> Speakers
+            let currentNode = audioElementSource;
+            eqFilters.forEach(filter => {
+                currentNode.connect(filter);
+                currentNode = filter;
+            });
+            currentNode.connect(masterGainNode); // Output of EQ chain goes to our masterGainNode
+            masterGainNode.connect(audioContext.destination); // masterGainNode goes to actual output
+
+            isAudioContextInitialized = true;
+            console.log(`AudioContext and EQ initialized. Master boost set to: ${fixedBoostValue}x`);
+            eqSliders.forEach(slider => slider.disabled = false);
+            if(resetEqBtn) resetEqBtn.disabled = false;
+            presetButtons.forEach(btn => btn.disabled = false);
+        } catch (e) {
+            console.error("Error initializing Web Audio API:", e);
+            displayTrackError("Audio effects (EQ) not available.");
+            eqSliders.forEach(slider => slider.disabled = true);
+            if(resetEqBtn) resetEqBtn.disabled = true;
+            presetButtons.forEach(btn => btn.disabled = true);
+        }
+    }
+
     function scrollToActivePlaylistItem() { if (!playlistElement) return; const activeItem = playlistElement.querySelector('li.active'); if (activeItem) activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-    function loadTrack(trackIndexInCurrentList, playWhenLoaded = false) { clearTrackError(); trackFormatDisplay.textContent = ''; trackFormatSeparator.style.display = 'none'; if (externalTrackDescriptionContent) externalTrackDescriptionContent.textContent = ''; if (externalTrackDescriptionArea) externalTrackDescriptionArea.style.display = 'none'; if (trackIndexInCurrentList >= 0 && trackIndexInCurrentList < currentTracklist.length) { const track = currentTracklist[trackIndexInCurrentList]; audio.src = track.src; trackTitleDisplay.textContent = track.title; trackArtistDisplay.textContent = track.artist; const format = getFormatFromSrc(track.src); if (format) { trackFormatDisplay.textContent = format; trackFormatSeparator.style.display = 'inline'; } if (track.description && externalTrackDescriptionContent && externalTrackDescriptionArea) { externalTrackDescriptionContent.textContent = track.description; externalTrackDescriptionArea.style.display = 'block'; } currentTrackIndex = trackIndexInCurrentList; updatePlaylistActiveState(currentTrackIndex); scrollToActivePlaylistItem(); progressBar.value = 0; progressBar.max = 100; updateSliderFill(progressBar); currentTimeDisplay.textContent = '0:00'; totalDurationDisplay.textContent = '0:00'; audioPlayIntent = playWhenLoaded; } else { displayTrackError("Track not found in current list."); trackTitleDisplay.textContent = "Error"; trackArtistDisplay.textContent = "Unknown"; totalDurationDisplay.textContent = 'N/A'; if (externalTrackDescriptionArea) externalTrackDescriptionArea.style.display = 'none'; } }
+    
+    // loadTrack remains mostly the same, audio.src is set here
+    function loadTrack(trackIndexInCurrentList, playWhenLoaded = false) { 
+        clearTrackError(); 
+        trackFormatDisplay.textContent = ''; 
+        trackFormatSeparator.style.display = 'none'; 
+        if (externalTrackDescriptionContent) externalTrackDescriptionContent.textContent = ''; 
+        if (externalTrackDescriptionArea) externalTrackDescriptionArea.style.display = 'none'; 
+        
+        if (trackIndexInCurrentList >= 0 && trackIndexInCurrentList < currentTracklist.length) { 
+            const track = currentTracklist[trackIndexInCurrentList]; 
+            audio.src = track.src; // HTML5 audio element gets the source
+            // The HTML5 audio element's own volume is controlled by volumeSlider
+            // The masterGainNode provides an overall boost/cut before this.
+            if (volumeSlider) { // Ensure volume slider value is applied on track load
+                audio.volume = parseFloat(volumeSlider.value);
+            } else {
+                audio.volume = 1.0; // Default if no slider
+            }
+
+            trackTitleDisplay.textContent = track.title; 
+            trackArtistDisplay.textContent = track.artist; 
+            const format = getFormatFromSrc(track.src); 
+            if (format) { 
+                trackFormatDisplay.textContent = format; 
+                trackFormatSeparator.style.display = 'inline'; 
+            } 
+            if (track.description && externalTrackDescriptionContent && externalTrackDescriptionArea) { 
+                externalTrackDescriptionContent.textContent = track.description; 
+                externalTrackDescriptionArea.style.display = 'block'; 
+            } 
+            currentTrackIndex = trackIndexInCurrentList; 
+            updatePlaylistActiveState(currentTrackIndex); 
+            scrollToActivePlaylistItem(); 
+            progressBar.value = 0; 
+            progressBar.max = 100; 
+            updateSliderFill(progressBar); 
+            currentTimeDisplay.textContent = '0:00'; 
+            totalDurationDisplay.textContent = '0:00'; 
+            audioPlayIntent = playWhenLoaded; 
+        } else { 
+            displayTrackError("Track not found in current list."); 
+            trackTitleDisplay.textContent = "Error"; 
+            trackArtistDisplay.textContent = "Unknown"; 
+            totalDurationDisplay.textContent = 'N/A'; 
+            if (externalTrackDescriptionArea) externalTrackDescriptionArea.style.display = 'none'; 
+        } 
+    }
+    
     function updatePlaylistActiveState(activeIndexInCurrentList) { playlistElement.querySelectorAll('li').forEach((item, index) => { item.classList.toggle('active', index === activeIndexInCurrentList); }); }
-    function actuallyPlayAudio() { if (!isAudioContextInitialized && currentTracklist.length > 0) initAudioProcessing(); if (audioContext && audioContext.state === 'suspended') audioContext.resume().catch(e => console.warn("AudioContext resume failed", e)); const playPromise = audio.play(); if (playPromise !== undefined) playPromise.then(() => { isPlaying = true; playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>'; playPauseBtn.setAttribute('aria-label', 'Pause track'); clearTrackError(); audioPlayIntent = false; }).catch(error => { console.error("Error playing track:", error); displayTrackError(`Cannot play: ${error.name}.`); isPlaying = false; playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; playPauseBtn.setAttribute('aria-label', 'Play track'); audioPlayIntent = false; }); }
+    
+    // actuallyPlayAudio ensures AudioContext is initialized
+    function actuallyPlayAudio() { 
+        if (!isAudioContextInitialized && currentTracklist.length > 0) {
+            initAudioProcessing(    // MODIFIED initAudioProcessing with Fixed Master Boost
+    function initAudioProcessing() {
+        if (isAudioContextInitialized) return;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            audioElementSource = audioContext.createMediaElementSource(audio); 
+            
+            masterGainNode = audioContext.createGain(); 
+            
+            // Apply a fixed boost. Adjust this value as needed.
+            // 1.0 = no boost
+            // 1.5 = 50% louder (approx +3.5dB)
+            // 2.0 = 100% louder (approx +6dB) - START HERE OR LOWER AND TEST CAREFULLY
+            const fixedBoostValue = 1.5; // <<<<<<<====== HERE IS THE VOLUME GAIN BOOSTER VALUE
+            masterGainNode.gain.value = fixedBoostValue;
+
+            eqFilters = eqFrequencies.map((freq, i) => {
+                // ... rest of EQ filter creation
+            });
+            // ... (rest of the function)
+        } catch (e) {
+            // ...
+        }
+    }); // Initialize Web Audio API (incl. masterGainNode)
+        }
+        if (audioContext && audioContext.state === 'suspended') {
+            audioContext.resume().catch(e => console.warn("AudioContext resume failed", e));
+        }
+        const playPromise = audio.play(); 
+        if (playPromise !== undefined) {
+            playPromise.then(() => { 
+                isPlaying = true; 
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>'; 
+                playPauseBtn.setAttribute('aria-label', 'Pause track'); 
+                clearTrackError(); 
+                audioPlayIntent = false; 
+            }).catch(error => { 
+                console.error("Error playing track:", error); 
+                displayTrackError(`Cannot play: ${error.name}.`); 
+                isPlaying = false; 
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; 
+                playPauseBtn.setAttribute('aria-label', 'Play track'); 
+                audioPlayIntent = false; 
+            }); 
+        }
+    }
+    
     function pauseAudio() { audio.pause(); isPlaying = false; audioPlayIntent = false; playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; playPauseBtn.setAttribute('aria-label', 'Play track'); }
     function togglePlayPause() { if (!audio.src || audio.src === window.location.href || audio.src === "") { if (currentTracklist.length > 0) loadTrack(currentTrackIndex, true); else { displayTrackError("No tracks to play."); return; } } if (isPlaying) pauseAudio(); else { audioPlayIntent = true; if (headphoneModal && headphoneModal.classList.contains('visible')) { /* Modal open */ } else { actuallyPlayAudio(); } } }
     function playNextTrack() { if (currentTracklist.length === 0) { displayTrackError("No tracks in playlist."); return; } currentTrackIndex = (currentTrackIndex + 1) % currentTracklist.length; loadTrack(currentTrackIndex, true); }
@@ -364,14 +511,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         populatePlaylist(currentTracklist);
         if (currentTracklist.length > 0) {
-            const currentAudioSrc = audio.src; // Get the src of the currently loaded audio
+            const currentAudioSrc = audio.src; 
             const stillPlayingTrackIndex = currentTracklist.findIndex(track => track.src === currentAudioSrc);
 
             if (isPlaying && stillPlayingTrackIndex !== -1) {
-                currentTrackIndex = stillPlayingTrackIndex; // Update currentTrackIndex to match the new list
-                loadTrack(currentTrackIndex, true); // Reload to ensure UI consistency, keep playing
+                currentTrackIndex = stillPlayingTrackIndex; 
+                loadTrack(currentTrackIndex, true); 
             } else {
-                loadTrack(0, false); // Load the first track of the new filtered list, don't autoplay
+                loadTrack(0, false); 
             }
         } else {
             displayTrackError("No tracks found for this filter.");
@@ -386,13 +533,60 @@ document.addEventListener('DOMContentLoaded', () => {
     function manualEQChange() { let currentManualGains = []; eqSliders.forEach((slider, index) => { const gainValue = parseFloat(slider.value); currentManualGains.push(gainValue); if (eqGainValues[index]) eqGainValues[index].textContent = `${gainValue >= 0 ? '+' : ''}${gainValue.toFixed(1)}dB`; if (isAudioContextInitialized && eqFilters[index]) eqFilters[index].gain.value = gainValue; }); eqPresets.manual = currentManualGains; setActivePresetButton("manual"); presetButtons.forEach(button => { if (button.dataset.preset !== 'manual') button.classList.remove('active');}); }
     function applyFlatPreset() { applyEQGains(eqPresets.flat); setActivePresetButton("flat"); }
 
-    playPauseBtn.addEventListener('click', togglePlayPause); nextBtn.addEventListener('click', playNextTrack); prevBtn.addEventListener('click', playPrevTrack); skipForwardBtn.addEventListener('click', () => skipTime(10)); skipBackwardBtn.addEventListener('click', () => skipTime(-10));
-    audio.addEventListener('loadedmetadata', () => { if (audio.duration && !isNaN(audio.duration)) { totalDurationDisplay.textContent = formatTime(audio.duration); progressBar.max = audio.duration; } else { totalDurationDisplay.textContent = 'N/A'; progressBar.max = 100; } progressBar.value = 0; updateSliderFill(progressBar); updateProgress(); clearTrackError(); if (audioPlayIntent && (!headphoneModal || !headphoneModal.classList.contains('visible'))) { actuallyPlayAudio(); } });
-    audio.addEventListener('error', (e) => { console.error("Audio Element Error:", e); let errorMsg = "Error loading track."; if (audio.error) { /* error codes can be checked here, e.g., audio.error.code */ } displayTrackError(errorMsg); trackTitleDisplay.textContent = "Error"; trackArtistDisplay.textContent = currentTracklist[currentTrackIndex]?.title || "Unknown Track"; totalDurationDisplay.textContent = 'Error'; isPlaying = false; audioPlayIntent = false; playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; playPauseBtn.setAttribute('aria-label', 'Play track'); progressBar.value = 0; progressBar.max = 100; updateSliderFill(progressBar); });
-    audio.addEventListener('timeupdate', () => { if (audio.duration && !isNaN(audio.duration)) { progressBar.value = audio.currentTime; updateSliderFill(progressBar); } updateProgress(); });
+    playPauseBtn.addEventListener('click', togglePlayPause); 
+    nextBtn.addEventListener('click', playNextTrack); 
+    prevBtn.addEventListener('click', playPrevTrack); 
+    skipForwardBtn.addEventListener('click', () => skipTime(10)); 
+    skipBackwardBtn.addEventListener('click', () => skipTime(-10));
+    
+    audio.addEventListener('loadedmetadata', () => { 
+        if (audio.duration && !isNaN(audio.duration)) { 
+            totalDurationDisplay.textContent = formatTime(audio.duration); 
+            progressBar.max = audio.duration; 
+        } else { 
+            totalDurationDisplay.textContent = 'N/A'; 
+            progressBar.max = 100; 
+        } 
+        progressBar.value = 0; 
+        updateSliderFill(progressBar); 
+        updateProgress(); 
+        clearTrackError(); 
+        if (audioPlayIntent && (!headphoneModal || !headphoneModal.classList.contains('visible'))) { 
+            actuallyPlayAudio(); 
+        } 
+    });
+    audio.addEventListener('error', (e) => { 
+        console.error("Audio Element Error:", e); 
+        let errorMsg = "Error loading track."; 
+        if (audio.error) { /* error codes can be checked here, e.g., audio.error.code */ } 
+        displayTrackError(errorMsg); 
+        trackTitleDisplay.textContent = "Error"; 
+        trackArtistDisplay.textContent = currentTracklist[currentTrackIndex]?.title || "Unknown Track"; 
+        totalDurationDisplay.textContent = 'Error'; 
+        isPlaying = false; 
+        audioPlayIntent = false; 
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; 
+        playPauseBtn.setAttribute('aria-label', 'Play track'); 
+        progressBar.value = 0; 
+        progressBar.max = 100; 
+        updateSliderFill(progressBar); 
+    });
+    audio.addEventListener('timeupdate', () => { 
+        if (audio.duration && !isNaN(audio.duration)) { 
+            progressBar.value = audio.currentTime; 
+            updateSliderFill(progressBar); 
+        } 
+        updateProgress(); 
+    });
     audio.addEventListener('ended', playNextTrack);
     progressBar.addEventListener('input', () => { seekProgress(); updateSliderFill(progressBar); });
-    volumeSlider.addEventListener('input', (e) => { audio.volume = parseFloat(e.target.value); updateSliderFill(volumeSlider); });
+    
+    // Volume slider STILL controls HTML5 audio element's volume (0-1)
+    volumeSlider.addEventListener('input', (e) => { 
+        audio.volume = parseFloat(e.target.value); 
+        updateSliderFill(volumeSlider); 
+    });
+    
     eqSliders.forEach(slider => { slider.addEventListener('input', () => { manualEQChange(); updateSliderFill(slider); }); });
     if(resetEqBtn) { resetEqBtn.addEventListener('click', () => { applyFlatPreset(); eqSliders.forEach(slider => updateSliderFill(slider)); }); }
     presetButtons.forEach(button => { button.addEventListener('click', () => { const presetName = button.dataset.preset; if (eqPresets[presetName]) { applyEQGains(eqPresets[presetName]); setActivePresetButton(presetName); eqSliders.forEach(slider => updateSliderFill(slider)); } }); });
@@ -402,7 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
         eqSliders.forEach((slider, index) => { if (defaultEQSettings.gains[index] !== undefined) { slider.value = defaultEQSettings.gains[index]; if (eqGainValues[index]) { const gainValue = parseFloat(slider.value); eqGainValues[index].textContent = `${gainValue >= 0 ? '+' : ''}${gainValue.toFixed(1)}dB`;}}});
         if (masterTracks.length > 0) {
             populatePlaylist(currentTracklist);
-            loadTrack(currentTrackIndex, false);
+            loadTrack(currentTrackIndex, false); // This will set initial audio.volume via volumeSlider value
             playPauseBtn.disabled = false; prevBtn.disabled = false; nextBtn.disabled = false;
             skipForwardBtn.disabled = false; skipBackwardBtn.disabled = false;
             progressBar.disabled = false; filterButtons.forEach(btn => btn.disabled = false);
@@ -418,7 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
             presetButtons.forEach(btn => btn.disabled = true); filterButtons.forEach(btn => btn.disabled = true);
         }
         applyEQGains(eqPresets[defaultEQSettings.presetName]); setActivePresetButton(defaultEQSettings.presetName);
-        updateSliderFill(progressBar); updateSliderFill(volumeSlider); eqSliders.forEach(slider => updateSliderFill(slider));
+        updateSliderFill(progressBar); 
+        updateSliderFill(volumeSlider); 
+        eqSliders.forEach(slider => updateSliderFill(slider));
     }
     initializePlayer();
 });
