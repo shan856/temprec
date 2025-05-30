@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>OFFICE NATAKA - Audio Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1 class="website-heading">OFFICE NATAKA</h1>
+
+    <!-- Headphone Warning Modal - UPDATED CONTENT -->
+    <div id="headphone-warning-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h4><i class="fas fa-headphones-alt"></i> Optimal Listening Experience Recommended!</h4>
+            <p>This audio contains segments with background noise. To ensure you don't miss any important details and for the best possible experience, <strong>I strongly recommend using earphones or headphones.</strong></p>
+            <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.8;">I've done my best to restore the audio and reduce noise, but some may remain. Using headphones will significantly help in catching every nuance.</p>
+            <!-- New line added below -->
+            <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.9;">For further clarity, try using the "Custom 1" or "Custom 2" equaliser presets.</p>
+            <p style="margin-top: 15px; font-weight: 500;">All the best, and enjoy the recordings!</p>
+            <div class="modal-actions">
+                <button id="proceed-anyway-btn" class="modal-btn primary">Okay, I Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle-btn" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="audio-player-container">
+        <div id="external-track-description-area" class="external-track-description-area" style="display: none;">
+             <h3>Track Details</h3>
+             <p id="external-track-description-content"></p>
+        </div>
+
+        <div class="player-card">
+            <div class="track-info">
+                <h2 id="track-title">Track Title</h2>
+                <p class="track-meta-info">
+                    <span id="track-artist">Artist Name / Timeframe</span>
+                    <span id="track-format-separator" style="margin: 0 5px; display: none;">•</span>
+                    <span id="track-format" style="font-style: normal; font-size: 0.9em;"></span>
+                </p>
+                <p id="track-error" class="track-error-message" style="display: none;"></p>
+            </div>
+            <audio id="audio-element"></audio>
+            <div class="progress-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" value="0" min="0" step="1">
+                <span id="total-duration">0:00</span>
+            </div>
+            <div class="controls">
+                <button id="skip-backward-btn" aria-label="Skip 10 seconds backward"><i class="fas fa-undo-alt"></i></button>
+                <button id="prev-btn" aria-label="Previous track"><i class="fas fa-backward"></i></button>
+                <button id="play-pause-btn" aria-label="Play or Pause track"><i class="fas fa-play"></i></button>
+                <button id="next-btn" aria-label="Next track"><i class="fas fa-forward"></i></button>
+                <button id="skip-forward-btn" aria-label="Skip 10 seconds forward"><i class="fas fa-redo-alt"></i></button>
+            </div>
+            <div class="volume-container">
+                <i class="fas fa-volume-down" aria-hidden="true"></i>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+                <i class="fas fa-volume-up" aria-hidden="true"></i>
+            </div>
+            <div class="equalizer-section-wrapper">
+                <div class="equalizer-header"><h3>Equaliser</h3></div>
+                <h4>Recommended presets</h4>
+                <div class="eq-presets-grid">
+                    <button class="eq-preset-btn active" data-preset="custom1">Custom 1</button>
+                    <button class="eq-preset-btn" data-preset="custom2">Custom 2</button>
+                    <button class="eq-preset-btn" data-preset="regular">Regular</button>
+                </div>
+                <h4>Manual adjustment</h4>
+                <div class="equalizer-container">
+                    <div class="eq-band"><label for="eq-band-0">60Hz</label><input type="range" id="eq-band-0" class="eq-slider" min="-15" max="15" step="0.5" value="5.5"><span class="eq-gain-value">+5.5dB</span></div>
+                    <div class="eq-band"><label for="eq-band-1">230Hz</label><input type="range" id="eq-band-1" class="eq-slider" min="-20" max="15" step="0.5" value="-15"><span class="eq-gain-value">-15.0dB</span></div>
+                    <div class="eq-band"><label for="eq-band-2">910Hz</label><input type="range" id="eq-band-2" class="eq-slider" min="-15" max="15" step="0.5" value="-15"><span class="eq-gain-value">-15.0dB</span></div>
+                    <div class="eq-band"><label for="eq-band-3">3.6kHz</label><input type="range" id="eq-band-3" class="eq-slider" min="-15" max="15" step="0.5" value="0"><span class="eq-gain-value">+0.0dB</span></div>
+                    <div class="eq-band"><label for="eq-band-4">14.0kHz</label><input type="range" id="eq-band-4" class="eq-slider" min="-15" max="15" step="0.5" value="15"><span class="eq-gain-value">+15.0dB</span></div>
+                    <button id="reset-eq-btn">Reset to Flat</button>
+                </div>
+                <div class="enhance-sound-info"><h4>Enhance sound</h4><p><i class="fas fa-headphones-alt"></i> Put in earphones before adjusting sound effects</p></div>
+            </div>
+        </div>
+
+        <div class="playlist-container">
+            <div class="playlist-header">
+                <h3>Playlist</h3>
+                <div class="playlist-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="PWRDCNV">PWRDCNV</button>
+                    <button class="filter-btn" data-filter="MCNV">MCNV</button>
+                    <button class="filter-btn" data-filter="Call">Calls</button>
+                </div>
+            </div>
+            <ul id="playlist">
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
