@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+audios/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+audios/**/*.wav filter=lfs diff=lfs merge=lfs -text
+audios/**/*.m4a filter=lfs diff=lfs merge=lfs -text
